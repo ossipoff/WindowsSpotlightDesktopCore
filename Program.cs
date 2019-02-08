@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 
 namespace WindowsSpotlightDesktopCore
 {
@@ -9,6 +11,14 @@ namespace WindowsSpotlightDesktopCore
     {
         static void Main(string[] args)
         {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+
+            var keep = configuration.GetValue<bool>("keepImages", true);
+
             var pkgs = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Packages");
             if (Directory.Exists(pkgs))
             {
@@ -16,7 +26,7 @@ namespace WindowsSpotlightDesktopCore
                 var assets = Path.Combine(cdm, @"LocalState\Assets");
                 if (Directory.Exists(assets))
                 {
-                    if (Directory.Exists("Images"))
+                    if (!keep && Directory.Exists("Images"))
                     {
                         Directory.Delete("Images", recursive: true);
                     }
