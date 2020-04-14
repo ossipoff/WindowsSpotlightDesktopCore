@@ -5,7 +5,7 @@ Windows 10 application that copies images from the Windows Spotlight (https://do
 You'll need
 
 * Visual Studio Code
-* .NET Core SDK 2.2+
+* .NET Core SDK 3.1
 
 tasks.json file has a build and a publish task
 

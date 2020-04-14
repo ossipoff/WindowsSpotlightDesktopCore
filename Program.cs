@@ -18,6 +18,7 @@ namespace WindowsSpotlightDesktopCore
             IConfigurationRoot configuration = builder.Build();
 
             var keep = configuration.GetValue<bool>("keepImages", true);
+            var overwrite = configuration.GetValue<bool>("overwriteImages", true);
 
             var pkgs = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Packages");
             if (Directory.Exists(pkgs))
@@ -45,7 +46,10 @@ namespace WindowsSpotlightDesktopCore
                                 {
                                     Directory.CreateDirectory("Images");
                                 }
-                                File.Copy(file, dst);
+                                if (!File.Exists(dst) || overwrite)
+                                {
+                                    File.Copy(file, dst, overwrite);
+                                }
                             }
                         }
                         catch (Exception ex)
