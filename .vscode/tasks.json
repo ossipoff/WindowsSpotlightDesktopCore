@@ -7,7 +7,9 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/WindowsSpotlightDesktopCore.csproj"
+                "${workspaceFolder}/WindowsSpotlightDesktopCore.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -17,12 +19,23 @@
             "type": "process",
             "args": [
                 "publish",
-                "-c",
-                "Release",
-                "-r",
-                "win10-x64"
+                "${workspaceFolder}/WindowsSpotlightDesktopCore.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": []
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/WindowsSpotlightDesktopCore.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }
